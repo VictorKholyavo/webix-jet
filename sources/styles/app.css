@@ -56,3 +56,23 @@
 	font-size:20px;
 	vertical-align:middle;
 }
+
+.webix_list_item.webix_selected {
+  background-color: lightblue;
+}
+
+.blue {
+  font-size: 27px;
+  text-align: center;
+  color: white;
+  background-color: blue;
+  width: 100%;
+}
+
+.toolbar {
+  width: 100%
+}
+
+.webix_icon {
+  float: right;
+}
