@@ -18,7 +18,7 @@ export default class DataView extends JetView{
 						{
 							view: "list",
 							css: "menu",
-							id:"list",
+							localId:"list",
 							select: true,
 							scroll: false,
 							width: 200,
@@ -42,6 +42,7 @@ export default class DataView extends JetView{
 		};
 	}
 	init(){
+		this.$$("list").select("Countries");
 		//view.parse(countries);
 	}
 }
