@@ -4,7 +4,7 @@ import {contacts} from "models/contacts";
 export default class StartView extends JetView{
 	config(){
 		return {
-			 rows: [
+			 cols: [
 			 	{
 					cols: [
 						{
@@ -43,8 +43,7 @@ export default class StartView extends JetView{
 								{
 									view:"form",
 									id: "formForContacts",
-									css:"webix_shadow_medium",
-									width: 300,
+									css:"webix_shadow_medium form",
 									elements:[
 										{ template:"User Name", type:"section"},
 										{ view:"text", name:"Name"},
@@ -52,7 +51,7 @@ export default class StartView extends JetView{
 										{ view:"text", name:"Email" },
 									]
 								},
-								{		},
+								{	view:"spacer"	},
 							]
 						}
 					]
