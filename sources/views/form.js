@@ -41,9 +41,8 @@ export default class FormView extends JetView{
               value: "Save",
               width: 300,
               click:() => {
-                // const values = this.getRoot().getValues();
-                // this.app.callEvent("onDataEditStop", [values]);
-                // console.log(values);
+                const filled = this.$$("formForContacts").getValues();
+								this.app.callEvent("onDataEditStop", [filled]);
               }
             },
           ]
@@ -57,14 +56,12 @@ export default class FormView extends JetView{
 
   }
   urlChange(view,url) {
-    //const values2 = this.getRoot().getValues();
-    //console.log(values2)
-
     var form = this.$$("formForContacts");
     var id = this.getParam("id", true);
+		//console.log(id);
     var values = contacts.getItem(id);
-    if (values) {
-        form.setValues(values);
+		if (values) {
+        form.setValues(values)
     }
   }
 

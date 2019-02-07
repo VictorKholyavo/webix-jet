@@ -20,6 +20,7 @@ export default class StartView extends JetView{
 								{
 									view:"list",
 									localId:"listForContacts",
+									editable: true,
 									type: {
 										height: 65,
 										template: "<div class='overall'><div class='title'>#Name#<span class='webix_icon wxi-close'></span></div><div class='year'>#Email#</div> </div>",
@@ -46,11 +47,9 @@ export default class StartView extends JetView{
 		              view: "button",
 		              type: "form",
 		              value: "Add",
-									click: () =>{
-										// var user = {"Name":"Daniel Kreig","Email":"daniel@gmail.com","Status":1,"Country":2};
-										//
-										// this.app.callEvent("onDataEditStop", [values])
-										// contacts.add(user)
+									click: () => {
+										var user = {"Name":"Daniel Kreig","Email":"daniel@gmail.com","Status":1,"Country":2};
+										contacts.add(user)
 									}
 
 		            },
@@ -67,19 +66,27 @@ export default class StartView extends JetView{
 		};
 	}
 	init(view, url){
+
 		this.$$("listForContacts").sync(contacts);
+		this.$$("listForContacts").parse(contacts);
+		this.app.attachEvent("onDataEditStop", (filled) => {
+			var id = this.getParam("id", true);
+			console.log(filled);
+			console.log(contacts.config.data[id-1]);
+			contacts.config.data[id-1] = filled;
+			console.log(contacts.config.data[id-1]);
+			console.log(this.$$("listForContacts"))
+			//contacts.add(filled);
+		});
 	}
 
-
 	urlChange(view){
- 	 	const list = this.$$("listForContacts");
-   	var id = this.getParam("id");
-		if (id) {
-	    if (id && list.exists(id)){
-	        list.select(id);
-	    }
+	 	 	const list = this.$$("listForContacts");
+	   	var id = this.getParam("id");
+			if (id) {
+		    if (id && list.exists(id)){
+		        list.select(id);
+		    }
+			}
 		}
-		else console.log('asdasd');
   }
-
-}
