@@ -1,5 +1,6 @@
 import {JetView} from "webix-jet";
 import {contacts} from "models/contacts";
+import FormView from "./form.js"
 
 export default class StartView extends JetView{
 	config(){
@@ -35,23 +36,29 @@ export default class StartView extends JetView{
 											return false;
 										}
 									},
+									on:{
+										onAfterSelect: (id) => {
+											this.setParam("id", id, true);
+										}
+									},
 								},
+								{
+		              view: "button",
+		              type: "form",
+		              value: "Add",
+									click: () =>{
+										// var user = {"Name":"Daniel Kreig","Email":"daniel@gmail.com","Status":1,"Country":2};
+										//
+										// this.app.callEvent("onDataEditStop", [values])
+										// contacts.add(user)
+									}
+
+		            },
 							]
 						},
 						{
 							rows: [
-								{
-									view:"form",
-									id: "formForContacts",
-									css:"webix_shadow_medium form",
-									elements:[
-										{ template:"User Name", type:"section"},
-										{ view:"text", name:"Name"},
-										{ template:"Email", type:"section"},
-										{ view:"text", name:"Email" },
-									]
-								},
-								{	view:"spacer"	},
+								FormView
 							]
 						}
 					]
@@ -59,7 +66,20 @@ export default class StartView extends JetView{
 			 ]
 		};
 	}
-	init(){
-		this.$$("listForContacts").parse(contacts);
+	init(view, url){
+		this.$$("listForContacts").sync(contacts);
 	}
+
+
+	urlChange(view){
+ 	 	const list = this.$$("listForContacts");
+   	var id = this.getParam("id");
+		if (id) {
+	    if (id && list.exists(id)){
+	        list.select(id);
+	    }
+		}
+		else console.log('asdasd');
+  }
+
 }
