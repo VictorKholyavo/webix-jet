@@ -69,10 +69,6 @@ export default class StartView extends JetView{
 		this.$$("listForContacts").sync(contacts);
 		this.app.attachEvent("onDataEditStop", (filled) => {
 			var id = this.getParam("id", true);
-<<<<<<< HEAD
-=======
-			//contacts.config.data[id+1] = filled;
->>>>>>> 3088a386173863701bf6674d0562c6e924c435a8
 			contacts.remove(id)
 			contacts.add(filled)
 			console.log(contacts);
