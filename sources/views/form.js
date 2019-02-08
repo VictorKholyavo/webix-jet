@@ -22,6 +22,7 @@ export default class FormView extends JetView{
 							localId: "Country",
               label: "Country",
               width: 200,
+							//template: "#Name#",
 							value:1,
 							options: "./models/countries.js"
             },
