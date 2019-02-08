@@ -32,9 +32,8 @@ export default class StartView extends JetView{
 									css:"webix_shadow_medium",
 									scroll: false,
 									onClick: {
-										"wxi-close":function(e ,id) {
-											this.remove(id);
-											return false;
+										"wxi-close": (e, id) => {
+											contacts.remove(id);
 										}
 									},
 									on:{
@@ -48,10 +47,9 @@ export default class StartView extends JetView{
 		              type: "form",
 		              value: "Add",
 									click: () => {
-										var user = {"Name":"Daniel Craig","Email":"daniel@gmail.com","Status":1,"Country":2};
-										contacts.add(user)
+										var user = {"Name":"Daniel Craig","Email":"daniel@gmail.com","Status":2,"Country":1};
+										contacts.add(user);
 									}
-
 		            },
 							]
 						},
@@ -67,19 +65,15 @@ export default class StartView extends JetView{
 	}
 	init(view, url){
 		this.$$("listForContacts").sync(contacts);
-		this.app.attachEvent("onDataEditStop", (filled) => {
-			var id = this.getParam("id", true);
-			contacts.updateItem(id, filled)
-		});
 	}
 
 	urlChange(view){
 	 	 	const list = this.$$("listForContacts");
 	   	var id = this.getParam("id");
-			if (id) {
-		    if (id && list.exists(id)){
-		        list.select(id);
-		    }
+			id = id || contacts.getFirstId();
+			if (id && list.exists(id)) {
+				list.select(id);
+				this.setParam("id", id, true);
 			}
 		}
   }

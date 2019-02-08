@@ -19,19 +19,30 @@ export default class FormView extends JetView{
             { view:"text", name:"Email" },
             {
               view: "combo",
-							localId: "Country",
+							localId: "countries",
               label: "Country",
               width: 200,
-							//template: "#Name#",
-							value:1,
-							options: "./models/countries.js"
+							name: "Country",
+							value: 1,
+							options: {
+								body:{
+									template: "#Name#",
+									data: countries
+								}
+							}
             },
             {
               view: "richselect",
               value: 1,
               label: "Status",
               width: 200,
-              options: statuses
+							name: "Status",
+							options: {
+								body:{
+									template: "#Name#",
+									data: statuses
+								}
+							}
             },
             {
               view: "button",
@@ -40,7 +51,8 @@ export default class FormView extends JetView{
               width: 300,
               click:() => {
                 const filled = this.$$("formForContacts").getValues();
-								this.app.callEvent("onDataEditStop", [filled]);
+								if(filled.id && contacts.exists(filled.id))
+									contacts.updateItem(filled.id, filled);
               }
             },
           ]
@@ -51,7 +63,7 @@ export default class FormView extends JetView{
   }
 
   init(){
-		this.$$("formForContacts").parse(contacts);
+
   }
   urlChange(view,url) {
     var form = this.$$("formForContacts");
