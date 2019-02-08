@@ -69,10 +69,7 @@ export default class StartView extends JetView{
 		this.$$("listForContacts").sync(contacts);
 		this.app.attachEvent("onDataEditStop", (filled) => {
 			var id = this.getParam("id", true);
-			contacts.remove(id)
-			contacts.add(filled)
-			console.log(contacts);
-			this.$$("listForContacts").parse(contacts);
+			contacts.updateItem(id, filled)
 		});
 	}
 
