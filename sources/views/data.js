@@ -43,6 +43,5 @@ export default class DataView extends JetView{
 	}
 	init(){
 		this.$$("list").select("Countries");
-		//view.parse(countries);
 	}
 }

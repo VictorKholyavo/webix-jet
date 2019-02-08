@@ -23,7 +23,7 @@ export default class FormView extends JetView{
               label: "Country",
               width: 200,
 							value:1,
-							options: countries
+							options: "./models/countries.js"
             },
             {
               view: "richselect",
