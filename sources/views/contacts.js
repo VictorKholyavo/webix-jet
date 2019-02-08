@@ -48,7 +48,7 @@ export default class StartView extends JetView{
 		              type: "form",
 		              value: "Add",
 									click: () => {
-										var user = {"Name":"Daniel Kreig","Email":"daniel@gmail.com","Status":1,"Country":2};
+										var user = {"Name":"Daniel Craig","Email":"daniel@gmail.com","Status":1,"Country":2};
 										contacts.add(user)
 									}
 
@@ -66,17 +66,14 @@ export default class StartView extends JetView{
 		};
 	}
 	init(view, url){
-
 		this.$$("listForContacts").sync(contacts);
-		this.$$("listForContacts").parse(contacts);
 		this.app.attachEvent("onDataEditStop", (filled) => {
 			var id = this.getParam("id", true);
-			console.log(filled);
-			console.log(contacts.config.data[id-1]);
-			contacts.config.data[id-1] = filled;
-			console.log(contacts.config.data[id-1]);
-			console.log(this.$$("listForContacts"))
-			//contacts.add(filled);
+			//contacts.config.data[id+1] = filled;
+			contacts.remove(id)
+			contacts.add(filled)
+			console.log(contacts);
+			this.$$("listForContacts").parse(contacts);
 		});
 	}
 

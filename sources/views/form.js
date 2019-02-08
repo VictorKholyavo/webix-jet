@@ -1,5 +1,7 @@
 import {JetView} from "webix-jet";
 import {contacts} from "models/contacts";
+import {countries} from "models/countries";
+import {statuses} from "models/statuses";
 
 export default class FormView extends JetView{
 	config(){
@@ -16,24 +18,19 @@ export default class FormView extends JetView{
             { template:"Email", type:"section"},
             { view:"text", name:"Email" },
             {
-              view: "richselect",
-              value: 1,
+              view: "combo",
+							localId: "Country",
               label: "Country",
               width: 200,
-              options: [
-                {id: 1, value: "English" },
-                {id: 2, value: "Russian"}
-              ]
+							value:1,
+							options: countries
             },
             {
               view: "richselect",
               value: 1,
               label: "Status",
               width: 200,
-              options: [
-                { id: 1, value: "English" },
-                {id: 2, value: "Russian"}
-              ]
+              options: statuses
             },
             {
               view: "button",
@@ -47,18 +44,17 @@ export default class FormView extends JetView{
             },
           ]
         },
-        {		},
+        {		}
       ]
     }
   }
 
   init(){
-
+		this.$$("formForContacts").parse(contacts);
   }
   urlChange(view,url) {
     var form = this.$$("formForContacts");
     var id = this.getParam("id", true);
-		//console.log(id);
     var values = contacts.getItem(id);
 		if (values) {
         form.setValues(values)
