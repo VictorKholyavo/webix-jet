@@ -5,13 +5,19 @@ import DataTable from "./datatable.js";
 
 export default class DataView extends JetView{
 	config(){
+		const _ = this.app.getService("locale")._;
+		const lang = this.app.getService("locale").getLang();
+
 		return {
 			rows: [
 				{
-					view: "template",
-					template: "Data",
+					view: "label",
+					value: "Data",
 					height: 40,
 					css: "blue",
+					template:(obj) => {
+						return _ (obj.value)
+					}
 				},
 				{
 					cols: [

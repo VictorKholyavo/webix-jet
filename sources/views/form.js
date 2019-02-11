@@ -5,6 +5,9 @@ import {statuses} from "models/statuses";
 
 export default class FormView extends JetView{
 	config(){
+		const _ = this.app.getService("locale")._;
+		const lang = this.app.getService("locale").getLang();
+
 		return {
       rows: [
         {
@@ -23,7 +26,6 @@ export default class FormView extends JetView{
               label: "Country",
               width: 200,
 							name: "Country",
-							value: 1,
 							options: {
 								body:{
 									template: "#Name#",
@@ -33,7 +35,6 @@ export default class FormView extends JetView{
             },
             {
               view: "richselect",
-              value: 1,
               label: "Status",
               width: 200,
 							name: "Status",
@@ -69,9 +70,16 @@ export default class FormView extends JetView{
     var form = this.$$("formForContacts");
     var id = this.getParam("id", true);
     var values = contacts.getItem(id);
-		if (values) {
-        form.setValues(values)
-    }
+
+		webix.promise.all ([
+			contacts.waitData,
+			countries.waitData,
+			statuses.waitData
+		]).then(() => {
+			if (values) {
+					form.setValues(values)
+			}
+		})
   }
 
 }

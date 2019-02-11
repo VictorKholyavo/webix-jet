@@ -4,6 +4,9 @@ import FormView from "./form.js"
 
 export default class StartView extends JetView{
 	config(){
+		const _ = this.app.getService("locale")._;
+		const lang = this.app.getService("locale").getLang();
+
 		return {
 			 cols: [
 			 	{
@@ -12,10 +15,13 @@ export default class StartView extends JetView{
 							rows: [
 								{
 									view: "label",
-									label: "Contacts",
+									value: "Contacts",
 									height: 48,
 									labelPosition: "top",
-									css: "blue"
+									css: "blue",
+									template:(obj) => {
+						        return _ (obj.value)
+									}
 								},
 								{
 									view:"list",
@@ -30,7 +36,6 @@ export default class StartView extends JetView{
 									select: true,
 									borderless: true,
 									css:"webix_shadow_medium",
-									scroll: false,
 									onClick: {
 										"wxi-close": (e, id) => {
 											contacts.remove(id);
@@ -45,10 +50,13 @@ export default class StartView extends JetView{
 								{
 		              view: "button",
 		              type: "form",
-		              value: "Add",
+		              label: "Add",
 									click: () => {
 										var user = {"Name":"Daniel Craig","Email":"daniel@gmail.com","Status":2,"Country":1};
 										contacts.add(user);
+									},
+									value:(obj) => {
+						        return _ (obj.label)
 									}
 		            },
 							]
@@ -65,6 +73,11 @@ export default class StartView extends JetView{
 	}
 	init(view, url){
 		this.$$("listForContacts").sync(contacts);
+		const list = this.$$("listForContacts");
+		contacts.waitData.then(() => {
+			var id = contacts.getFirstId();
+			list.select(id);
+		})
 	}
 
 	urlChange(view){
@@ -72,7 +85,6 @@ export default class StartView extends JetView{
 	   	var id = this.getParam("id");
 			id = id || contacts.getFirstId();
 			if (id && list.exists(id)) {
-				list.select(id);
 				this.setParam("id", id, true);
 			}
 		}

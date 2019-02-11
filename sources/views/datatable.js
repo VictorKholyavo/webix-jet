@@ -44,10 +44,15 @@ export default class DataTable extends JetView{
               type: "form",
               value: "Delete",
               width: 100,
-              click: () => {
+              click: (id) => {
                 var id = this.getParam("id");
-                this.app.callEvent("deleteItemFromTable", [id]);
                 id = id || this._componentData.getFirstId();
+                if (id && this.$$("datatableCountries").exists(id)) {
+                  this._componentData.remove(id)
+                  if (this._componentData.getFirstId()) {
+                    this.$$("datatableCountries").select(this._componentData.getFirstId())
+                  }
+                }
               }
             }
           ]
@@ -57,19 +62,17 @@ export default class DataTable extends JetView{
   }
 	init(){
     this.$$("datatableCountries").parse(this._componentData);
-    this.on(this.app, "deleteItemFromTable", (id) => {
-      if (id) {
-        this._componentData.remove(id)
-      }
-    })
+
 	}
   urlChange(view){
       const datatable = this.$$("datatableCountries");
       var id = this.getParam("id");
       id = id || this._componentData.getFirstId();
-      if (id && datatable.exists(id)) {
-        datatable.select(id);
-        this.setParam("id", id, true);
-      }
+      this._componentData.waitData.then(() => {
+        if (id && datatable.exists(id)) {
+          datatable.select(id);
+          this.setParam("id", id, true);
+        }
+      })
     }
 }

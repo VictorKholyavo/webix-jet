@@ -12,10 +12,11 @@ export default class MyApp extends JetApp{
 		};
 
 		super({ ...defaults, ...config });
+		this.use(plugins.Locale);
 	}
 	init(){
 		this.use(plugins.UrlParam, ["mode"]);
-
+		this.use(plugins.Locale);
 		var mode = this.getParam("mode");
 		if (mode){
 			this.$$("ms").setValue(mode);
